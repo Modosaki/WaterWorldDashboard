@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Project2 W.W.</title>
+
+  <!-- Leaflet CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css"
+  integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+   crossorigin=""/>
+  
+  <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"
+  integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q=="
+  crossorigin=""></script>
+
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+
+</head>
+
+<body>
+     <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          </div>
+    
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="/" > WATER WORLD <span class="sr-only">(current)</span></a></li>
+            </ul>
+          
+          <!-- Dropdown and two link buttons place on the top right -->
+            <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown">
+                <li class="active"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Plots <span class="caret"></span></a>
+                <!--<li class="active"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Plots <span class="sr-only">(current)</span></a></li>-->
+                <ul class="dropdown-menu">
+                  <li><a href="#lmap">World MAP Water Quality</a></li>
+                  <li><a href="#lpie-total">Water Accessability</a></li>
+                  <li><a href="#lsvg">Water Accessability over time</a></li>
+                <li><a href="#Sources">Data Sources</a></li>
+                </ul>
+              </li>  
+           
+            <li><a href="#Sources">Data</a></li>
+            </li>
+          </ul>
+          </div>
+          <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-md-12 jumbotron text-center">
+        <h1>Water Quality and Accessability Dashboard</h1>
+        <p>Use the interactive charts below to explore the dataset</p>
+          <div id="lmap"></div>
+      </div>
+    </div>
+<div class="row">
+     <h3> Water Quality around the world</h3>
+    <p>Select a country and generate water quality and accessability charts on that country</p>
+</div>
+    
+    <div class="row">
+        <div class="col-md-2">
+            <div class="well">
+              <h5>SELECT Country:</h5>
+              <!-- <select id="selDataset" onchange="optionChanged(this.value)"></select> -->
+              <select id="selDataset"></select>
+            </div>
+            <!-- <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h3 class="panel-title">Sample MetaData</h3>
+              </div>
+              <div id="sample-metadata" class="panel-body"></div>
+            </div> -->
+        </div>
+
+        <div class="col-md-10">
+          <div id="map"></div>
+        </div>
+    </div>
+         <div class="row">
+<div class= pad></div>    
+      <div class="row">
+<div class= pad></div> 
+   <div class="row">
+<div class= pad></div> 
+      <div class="row">
+<div class= pad></div> 
+      <div id="lpie-total"></div>
+      <p></p>
+</div>
+    <div class = "row">
+      <div class="col-md-4">
+        <div id="pie-total"></div>
+      </div>
+      <div class="col-md-4">
+        <div id="pie-rural">
+          </div>
+      </div>
+      <div class="col-md-4">
+        <div id="pie-urban"></div>
+         
+      </div>
+    </div>
+  <div class= pad></div> 
+       <div id="lsvg"></div>
+      <p id="gull"></p>
+</div>    
+<div class="row">
+<div class= pad></div>  
+</div>
+    <div class="row">
+      <div class="col-md-12">
+        <div id="svg"></div>
+      </div>
+    </div>
+
+  </div>
+    
+  
+<div class="row">
+      <div class="col-md-12">
+        <div id="Sources"></div>
+           <div class="row">
+<div class= pad></div>  
+</div> 
+          <div class="list-group">
+              <h3 class="text-left">Refrences</h3>
+  <a  class="list-group-item list-group-item-action active">
+   Data sources used to produce the above results
+  </a>
+              
+ <a target="_blank" rel="noopener noreferrer" href="http://www.fao.org/nr/water/aquastat/data/query/index.html" class="list-group-item list-group-item-action" >
+   Food and Agricultural Organization (United Nations)
+  </a>
+  <a target="_blank" rel="noopener noreferrer"href="https://epi.envirocenter.yale.edu/2018-epi-report/water-and-sanitation" class="list-group-item list-group-item-action">Enviromental Performance Index (Yale)</a>
+  <a target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/lisa_Strausfeld" class="list-group-item list-group-item-action">Team Strausfeld...GO LISA GO!!!</a>
+  
+</div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- d3 & Jquery-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!-- Leaflet heatmap plugin-->
+  <!-- <script type="text/javascript" src="static/js/leaflet-heat.js"></script> -->
+
+
+  <!-- Plotly -->
+
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>  
+  
+  <!-- API key -->
+  <script src="{{ url_for('static', filename='js/config.js') }}"></script>
+
+  <!-- Main code -->
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+</body>
+
+</html>
